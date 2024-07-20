@@ -1,0 +1,9 @@
+<suite name="boringTests">
+    <test name="tda">
+        <classes>
+            <class name="FilesHandling.JSONParserTest"/>
+            <class name="FilesHandling.JSONParserTest"/>
+        </classes>
+    </test>
+
+</suite>
