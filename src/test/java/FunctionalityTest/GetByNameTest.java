@@ -3,6 +3,7 @@ package FunctionalityTest;
 import TestTask.Commands.AbstractCommand;
 import TestTask.Commands.Exception.InvalidArgs;
 import TestTask.Commands.GetListByNameCommand;
+import TestTask.ConfigReader;
 import TestTask.DataClasses.Student;
 import TestTask.FileHandling.JsonParser;
 import TestTask.Managers.CollectionManager;
@@ -23,12 +24,12 @@ public class GetByNameTest {
     private FTPClientHandler ftp;
     private CollectionManager collectionManager;
 
-    private static final String LOCAL_PATH = "src/test/resources/dataFromServer/output.json";
-    private static final String FTP_HOST = "localhost";
-    private static final int FTP_PORT = 21;
-    private static final String FTP_USERNAME = "Boring3";
-    private static final String FTP_PASSWORD = "PWD";
-    private static final String REMOTE_FILE_PATH = "input.json";
+    private static final String LOCAL_PATH = ConfigReader.getProperty("local.path");
+    private static final String FTP_HOST = ConfigReader.getProperty("ftp.host");
+    private static final int FTP_PORT = Integer.parseInt(ConfigReader.getProperty("ftp.port"));
+    private static final String FTP_USERNAME = ConfigReader.getProperty("ftp.username");
+    private static final String FTP_PASSWORD = ConfigReader.getProperty("ftp.password");
+    private static final String REMOTE_FILE_PATH = ConfigReader.getProperty("remote.file.path");
 
     @BeforeMethod
     public void setUp() throws IOException, AuthorizationFailed {

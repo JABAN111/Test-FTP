@@ -1,5 +1,6 @@
 package FtpInteraction;
 
+import TestTask.ConfigReader;
 import TestTask.ServerHandling.Exceptions.AuthorizationFailed;
 import TestTask.ServerHandling.FTPClientHandler;
 import TestTask.ServerHandling.ResponseStatus;
@@ -13,10 +14,14 @@ import static org.testng.Assert.assertEquals;
 public class FtpConnectingTest {
     private FTPClientHandler successfulFtpConnection;
 
+    private static final String FTP_HOST = ConfigReader.getProperty("ftp.host");
+    private static final int FTP_PORT = Integer.parseInt(ConfigReader.getProperty("ftp.port"));
+    private static final String FTP_USERNAME = ConfigReader.getProperty("ftp.username");
+    private static final String FTP_PASSWORD = ConfigReader.getProperty("ftp.password");
     @BeforeMethod
     public void setUp() throws IOException, AuthorizationFailed {
-        successfulFtpConnection = new FTPClientHandler("localhost", 21);
-        successfulFtpConnection.authorization("Boring3", "PWD");
+        successfulFtpConnection = new FTPClientHandler(FTP_HOST, FTP_PORT);
+        successfulFtpConnection.authorization(FTP_USERNAME, FTP_PASSWORD);
     }
 
     @AfterMethod
@@ -27,7 +32,7 @@ public class FtpConnectingTest {
     @DataProvider
     public Object[][] validDataForFtpConnecting() {
         return new Object[][]{
-                {"192.168.31.13", 21},
+                {FTP_HOST, 21},
                 {"localhost", 21}
         };
     }
@@ -59,7 +64,7 @@ public class FtpConnectingTest {
     @DataProvider
     public Object[][] validAuthDataForFtpConnecting() {
         return new Object[][]{
-                {"Boring3", "PWD"}
+                {FTP_USERNAME,FTP_PASSWORD}
         };
     }
 
