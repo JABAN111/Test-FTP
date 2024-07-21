@@ -1,11 +1,12 @@
 package FunctionalityTest;
 
 import TestTask.Commands.AbstractCommand;
+import TestTask.Commands.Exception.InvalidArgs;
 import TestTask.Commands.GetListByNameCommand;
 import TestTask.DataClasses.Student;
 import TestTask.FileHandling.JsonParser;
 import TestTask.Managers.CollectionManager;
-import TestTask.ServerHandling.AuthorizationFailed;
+import TestTask.ServerHandling.Exceptions.AuthorizationFailed;
 import TestTask.ServerHandling.FTPClientHandler;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -26,7 +27,7 @@ public class GetByNameTest {
     private static final String FTP_HOST = "localhost";
     private static final int FTP_PORT = 21;
     private static final String FTP_USERNAME = "Boring3";
-    private static final String FTP_PASSWORD = "pwd";
+    private static final String FTP_PASSWORD = "PWD";
     private static final String REMOTE_FILE_PATH = "input.json";
 
     @BeforeMethod
@@ -65,7 +66,7 @@ public class GetByNameTest {
     }
 
     @Test(dataProvider = "validNames")
-    public void getByIdTest(String nameStudent)  {
+    public void getByIdTest(String nameStudent) throws InvalidArgs {
         collectionManager.getStudentList().add(new Student(nameStudent));
 
         for (int i = 0; i < collectionManager.getStudentList().size(); i++) {
@@ -78,7 +79,7 @@ public class GetByNameTest {
         return new Object[][]{{null},{" "}};
     }
     @Test(dataProvider = "invalidNames")
-    public void getByNameTest(String nameStudent)  {
+    public void getByNameTest(String nameStudent) throws InvalidArgs {
         assertTrue(getByName.execute(new String[]{"GET_BY_NAME", nameStudent}).isEmpty());
         System.out.println(collectionManager.getStudentList());
     }

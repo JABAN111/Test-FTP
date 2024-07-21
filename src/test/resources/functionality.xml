@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="suite">
-    <test name="test suite">
+    <test name="Test functionality">
         <classes>
             <class name="FunctionalityTest.AddingTest"/>
             <class name="FunctionalityTest.GetByIdTest"/>
@@ -8,6 +8,4 @@
             <class name="FunctionalityTest.RemoveStudentByIdTest"/>
         </classes>
     </test>
-
-
 </suite>

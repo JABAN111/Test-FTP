@@ -1,6 +1,6 @@
 package FtpInteraction;
 
-import TestTask.ServerHandling.AuthorizationFailed;
+import TestTask.ServerHandling.Exceptions.AuthorizationFailed;
 import TestTask.ServerHandling.FTPClientHandler;
 import TestTask.ServerHandling.ResponseStatus;
 import org.testng.annotations.*;
@@ -16,7 +16,7 @@ public class FtpConnectingTest {
     @BeforeMethod
     public void setUp() throws IOException, AuthorizationFailed {
         successfulFtpConnection = new FTPClientHandler("localhost", 21);
-        successfulFtpConnection.authorization("Boring3", "pwd");
+        successfulFtpConnection.authorization("Boring3", "PWD");
     }
 
     @AfterMethod
@@ -59,7 +59,7 @@ public class FtpConnectingTest {
     @DataProvider
     public Object[][] validAuthDataForFtpConnecting() {
         return new Object[][]{
-                {"Boring3", "pwd"}
+                {"Boring3", "PWD"}
         };
     }
 
@@ -71,7 +71,7 @@ public class FtpConnectingTest {
     @DataProvider
     public Object[][] invalidAuthDataForFtpConnecting() {
         return new Object[][]{
-                {"Darma", "no"},
+                {"Dharma", "no"},
                 {null, null},
                 {"Boring", null},
                 {null, "Boring"},

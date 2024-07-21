@@ -2,10 +2,11 @@ package FunctionalityTest;
 
 import TestTask.Commands.AbstractCommand;
 import TestTask.Commands.AddStudentCommand;
+import TestTask.Commands.Exception.InvalidArgs;
 import TestTask.DataClasses.Student;
 import TestTask.FileHandling.JsonParser;
 import TestTask.Managers.CollectionManager;
-import TestTask.ServerHandling.AuthorizationFailed;
+import TestTask.ServerHandling.Exceptions.AuthorizationFailed;
 import TestTask.ServerHandling.FTPClientHandler;
 import org.testng.annotations.*;
 
@@ -28,19 +29,17 @@ public class AddingTest {
     private static final String FTP_HOST = "localhost";
     private static final int FTP_PORT = 21;
     private static final String FTP_USERNAME = "Boring3";
-    private static final String FTP_PASSWORD = "pwd";
+    private static final String FTP_PASSWORD = "PWD";
     private static final String REMOTE_FILE_PATH = "input.json";
 
     @BeforeMethod
     public void setUp() throws IOException, AuthorizationFailed {
         addCommand = new AddStudentCommand();
 
-        // Инициализация FTP соединения и загрузка файла
         ftp = new FTPClientHandler(FTP_HOST, FTP_PORT);
         ftp.authorization(FTP_USERNAME, FTP_PASSWORD);
         ftp.getFileFromServer(REMOTE_FILE_PATH, LOCAL_PATH);
 
-        // Инициализация CollectionManager и загрузка данных студентов
         collectionManager = CollectionManager.getInstance();
         collectionManager.setStudentList(JsonParser.readJsonFile(LOCAL_PATH));
         studentsFromTheInit = new ArrayList<>(collectionManager.getStudentList());
@@ -68,7 +67,7 @@ public class AddingTest {
     }
 
     @Test(dataProvider = "validStudents")
-    public void addStudent(String studentName) {
+    public void addStudent(String studentName) throws InvalidArgs {
         int sizeBeforeUpdate = studentsFromTheInit.size();
         System.out.println(addCommand.execute(new String[]{"ADD_STUDENT", studentName}));
         assertEquals(collectionManager.getStudentList().size(), sizeBeforeUpdate + 1);
@@ -81,14 +80,14 @@ public class AddingTest {
         };
     }
 
-    @Test(dataProvider = "invalidStudents", expectedExceptions = IllegalArgumentException.class)
-    public void invalidStudentTest(String studentName) {
+    @Test(dataProvider = "invalidStudents", expectedExceptions = InvalidArgs.class)
+    public void invalidStudentTest(String studentName) throws InvalidArgs {
         System.out.println(addCommand.execute(new String[]{"ADD_STUDENT", studentName}));
     }
 
 
     @Test(dataProvider = "validStudents")
-    public void uniqueIDTest(String studentName) {
+    public void uniqueIDTest(String studentName) throws InvalidArgs {
         HashSet<Integer> set = new HashSet<>();
         addCommand.execute(new String[]{"ADD_STUDENT", studentName});
         for(Student student : collectionManager.getStudentList()){

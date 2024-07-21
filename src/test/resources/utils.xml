@@ -1,9 +1,13 @@
-<suite name="boringTests">
-    <test name="tda">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Utils test">
+    <test name="Server connection test">
         <classes>
-            <class name="FilesHandling.JSONParserTest"/>
+            <class name="FtpInteraction.FtpConnectingTest"/>
+        </classes>
+    </test>
+    <test name="Files processing test">
+        <classes>
             <class name="FilesHandling.JSONParserTest"/>
         </classes>
     </test>
-
 </suite>
