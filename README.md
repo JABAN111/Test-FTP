@@ -3,9 +3,9 @@
 ---
 # Инструкция по запуску тестов
 1. Необходимо заменить в файле <code>src/test/resources/config.properties</code> следующие параметры:\
-<code>ftp.username=yourLogin\
-ftp.password=yourPassword</code>\
-при необходимости можно также изменить ваш <code>ip</code> и <code>port</code> 
+      <code>ftp.username=yourLogin\
+      ftp.password=yourPassword</code>\
+      при необходимости можно также изменить ваш <code>ip</code> и <code>port</code>
 2. Необходимо удостовериться, что ваш Ftp сервер поддерживает чтение и запись новых файлов для корректной работы всех типов операций
 3. Для запуска тестов: <code>mvn test</code>
 ---
