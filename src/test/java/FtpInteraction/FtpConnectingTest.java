@@ -85,8 +85,9 @@ public class FtpConnectingTest {
     }
 
     @Test(dataProvider = "invalidAuthDataForFtpConnecting", dependsOnMethods = "testFtpConnectingWithValidData", expectedExceptions = AuthorizationFailed.class)
-    public void testFtpConnectingWithInvalidAuthData(String login, String pwd) throws AuthorizationFailed {
-        successfulFtpConnection.authorization(login, pwd);
+    public void testFtpConnectingWithInvalidAuthData(String login, String pwd) throws AuthorizationFailed, IOException {
+        FTPClientHandler ftp = new FTPClientHandler(FTP_HOST,FTP_PORT);
+        ftp.authorization(login, pwd);
     }
 
     @DataProvider
